@@ -2,8 +2,8 @@
 import { useInterval } from "@vueuse/core";
 
 import { useSound } from "@vueuse/sound";
-import bellRing from "./assets/sounds/bell.mp3";
-import relaxingSound from "./assets/sounds/30_mins_meditate.mp3";
+import bellRing from "assets/sounds/bell.mp3";
+import relaxingSound from "assets/sounds/30_mins_meditate.mp3";
 
 const { play: playBell } = useSound(bellRing);
 const {
@@ -120,7 +120,7 @@ watch(counter, () => {
         >
       </div>
       <div class="flex justify-center px-10">
-        <img src="./assets/image/lotus.png" width="200" height="200" />
+        <img src="assets/image/lotus.png" width="200" height="200" />
       </div>
       <div class="p-10 flex flex-col gap-y-5">
         <h1 class="text-xl text-[#6E575D]">Start meditation</h1>
@@ -150,7 +150,7 @@ watch(counter, () => {
       </div>
       <div class="flex flex-col justify-center px-10">
         <div class="flex justify-center">
-          <img src="./assets/image/meditating.png" width="400" height="400" />
+          <img src="assets/image/meditating.png" width="400" height="400" />
         </div>
         <div class="flex flex-col justify-center p-5 gap-y-4">
           <div class="flex justify-center">
@@ -196,7 +196,7 @@ watch(counter, () => {
       </div>
       <div class="flex flex-col justify-center gap-y-2">
         <div class="flex justify-center">
-          <img src="./assets/image/finish.png" width="600" height="600" />
+          <img src="assets/image/finish.png" width="600" height="600" />
         </div>
 
         <span class="text-xl text-[#938581] text-center">

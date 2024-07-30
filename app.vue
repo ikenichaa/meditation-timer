@@ -6,21 +6,55 @@ import bellRing from "./assets/sounds/bell.mp3";
 import relaxingSound from "./assets/sounds/30_mins_meditate.mp3";
 
 const { play: playBell } = useSound(bellRing);
-const { play: playMusic, stop: stopMusic } = useSound(relaxingSound);
+const {
+  play: playMusic,
+  stop: stopMusic,
+  pause: pauseMusic,
+} = useSound(relaxingSound);
 const DEFAULT_MEDITATION_DURATION_IN_SECONDS = 10 * 60;
-const { counter, reset, pause, resume, isActive } = useInterval(1000, {
+const {
+  counter,
+  reset: resetTimer,
+  pause: pauseTimer,
+  resume: resumeTimer,
+  isActive: isTimerActive,
+} = useInterval(1000, {
   controls: true,
   immediate: false,
 });
 
+const replayMeditation = () => {
+  resetTimer();
+  playBell();
+  if (isMusicOn.value) {
+    stopMusic();
+    playMusic();
+  }
+};
+
+const pauseMeditation = () => {
+  pauseTimer();
+  if (isMusicOn.value) {
+    pauseMusic();
+  }
+};
+
+const resumeMeditation = () => {
+  resumeTimer();
+  if (isMusicOn.value) {
+    playMusic();
+  }
+};
+
 const resetMeditationTimer = () => {
-  reset();
-  pause();
+  resetTimer();
+  pauseTimer();
+  stopMusic();
 };
 
 const startMeditationTimer = () => {
-  reset();
-  resume();
+  resetTimer();
+  resumeTimer();
   playBell();
   if (isMusicOn.value) {
     playMusic();
@@ -60,6 +94,7 @@ const meditateProgressBarWidth = computed(
 );
 
 watch(counter, () => {
+  // Finish Meditation
   if (counter.value === meditationDurationInSeconds.value + 1) {
     resetMeditationTimer();
     if (isMusicOn.value) {
@@ -130,9 +165,9 @@ watch(counter, () => {
             ></div>
           </div>
           <div class="flex justify-center gap-x-2">
-            <Pause v-if="isActive" @click="pause" />
-            <Play v-if="!isActive" @click="resume" />
-            <Reset @click="reset" />
+            <Pause v-if="isTimerActive" @click="pauseMeditation" />
+            <Play v-if="!isTimerActive" @click="resumeMeditation" />
+            <Reset @click="replayMeditation" />
           </div>
         </div>
       </div>
